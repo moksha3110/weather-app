@@ -2,7 +2,7 @@
 class WeatherApp {
   constructor() {
     // Replace with your OpenWeatherMap API key
-    this.API_KEY = "";
+    this.API_KEY = "8f39b522a001b8a0823eac15958c095b";
     this.BASE_URL = "https://api.openweathermap.org/data/2.5";
     this.currentCity = null;
     this.favoriteCity = [];
@@ -754,3 +754,4 @@ document.addEventListener("DOMContentLoaded", () => {
     displayAlerts();
   }, 2000); // Display alerts after initial load
 });
+
