@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <i class="fas fa-cloud-sun"></i>
+          <span>Clima</span>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <button id="hamburgerBtn" class="hamburger-btn">
+              <i class="fas fa-bars"></i>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button id="darkModeBtn" class="dark-mode-btn">
+              <i class="fas fa-moon"></i>
+            </button>
+          </li>
+          <li class="nav-item search-container">
+            <div class="search-box">
+              <input type="text" id="citySearch" placeholder="Search city..." />
+              <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hamburger Menu -->
+    <div id="hamburgerMenu" class="hamburger-menu">
+      <div class="hamburger-content">
+        <div class="hamburger-header">
+          <h3><i class="fas fa-heart"></i> Favorite Cities</h3>
+          <button id="closeHamburger" class="close-hamburger">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div id="favoriteCitiesList" class="cities-grid">
+          <!-- Favorite cities will be populated here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="dashboard-container">
+        <!-- Current Weather - Primary Section -->
+        <section class="dashboard-section current-weather-section">
+          <div class="current-weather">
+            <div class="weather-header">
+              <h2 id="currentCity">Loading...</h2>
+              <button id="favoriteBtn" class="favorite-btn">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="weather-main">
+              <div class="weather-icon">
+                <img id="weatherIcon" src="" alt="Weather Icon" />
+              </div>
+              <div class="weather-info">
+                <div class="temperature">
+                  <span id="currentTemp">--</span>°C
+                </div>
+                <div class="weather-desc" id="weatherDesc">--</div>
+                <div class="feels-like">
+                  Feels like <span id="feelsLike">--</span>°C
+                </div>
+              </div>
+            </div>
+            <div class="weather-details">
+              <div class="detail-item">
+                <i class="fas fa-eye"></i>
+                <span>Visibility</span>
+                <span id="visibility">-- km</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-tint"></i>
+                <span>Humidity</span>
+                <span id="humidity">--%</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-wind"></i>
+                <span>Wind</span>
+                <span id="windSpeed">-- m/s</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-thermometer-half"></i>
+                <span>Pressure</span>
+                <span id="pressure">-- hPa</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="dashboard-section charts-section">
+          <div class="charts-container">
+            <div class="chart-card">
+              <h3><i class="fas fa-thermometer-half"></i> Temperature Trend</h3>
+              <canvas id="temperatureChart" width="400" height="200"></canvas>
+            </div>
+            <div class="chart-card">
+              <h3><i class="fas fa-cloud-rain"></i> Rainfall</h3>
+              <canvas id="rainfallChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- Forecast Section -->
+        <section class="dashboard-section forecast-section">
+          <h2><i class="fas fa-calendar-week"></i> 5-Day Weather Forecast</h2>
+          <div id="forecastContainer" class="forecast-container">
+            <!-- Forecast cards will be populated here -->
+          </div>
+        </section>
+
+        <!-- Details Section -->
+        <section class="dashboard-section details-section">
+          <h2><i class="fas fa-info-circle"></i> Detailed Information</h2>
+          <div class="details-grid">
+            <div class="detail-card">
+              <h3><i class="fas fa-sun"></i> Sun & Moon</h3>
+              <div class="detail-content">
+                <div class="detail-row">
+                  <span>Sunrise:</span>
+                  <span id="sunrise">--:--</span>
+                </div>
+                <div class="detail-row">
+                  <span>Sunset:</span>
+                  <span id="sunset">--:--</span>
+                </div>
+              </div>
+            </div>
+            <div class="detail-card">
+              <h3><i class="fas fa-thermometer-half"></i> Temperature</h3>
+              <div class="detail-content">
+                <div class="detail-row">
+                  <span>Min Temperature:</span>
+                  <span id="minTemp">--°C</span>
+                </div>
+                <div class="detail-row">
+                  <span>Max Temperature:</span>
+                  <span id="maxTemp">--°C</span>
+                </div>
+                <div class="detail-row">
+                  <span>Feels Like:</span>
+                  <span id="detailFeelsLike">--°C</span>
+                </div>
+              </div>
+            </div>
+            <div class="detail-card">
+              <h3><i class="fas fa-wind"></i> Wind & Air</h3>
+              <div class="detail-content">
+                <div class="detail-row">
+                  <span>Wind Speed:</span>
+                  <span id="detailWindSpeed">-- m/s</span>
+                </div>
+                <div class="detail-row">
+                  <span>Wind Direction:</span>
+                  <span id="windDirection">--°</span>
+                </div>
+                <div class="detail-row">
+                  <span>Pressure:</span>
+                  <span id="detailPressure">-- hPa</span>
+                </div>
+              </div>
+            </div>
+            <div class="detail-card">
+              <h3><i class="fas fa-tint"></i> Precipitation</h3>
+              <div class="detail-content">
+                <div class="detail-row">
+                  <span>Humidity:</span>
+                  <span id="detailHumidity">--%</span>
+                </div>
+                <div class="detail-row">
+                  <span>Visibility:</span>
+                  <span id="detailVisibility">-- km</span>
+                </div>
+                <div class="detail-row">
+                  <span>UV Index:</span>
+                  <span id="uvIndex">--</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Alerts Section -->
+        <section class="dashboard-section alerts-section">
+          <h2><i class="fas fa-exclamation-triangle"></i> Weather Alerts</h2>
+          <div id="alertsContainer" class="alerts-container">
+            <div class="no-alerts">
+              <i class="fas fa-check-circle"></i>
+              <p>No weather alerts for your current location</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Loading weather data...</p>
+      </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Error</h3>
+        <p id="errorMessage">Something went wrong. Please try again.</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
